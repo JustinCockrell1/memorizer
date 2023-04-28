@@ -7,7 +7,7 @@ const container = document.querySelector(".container");
 const countSpan = document.querySelector(".count");
 
 document.addEventListener("keydown",(e)=>{
-    if(e.key=="Backspace" && count>0) {
+    if((e.key=="Backspace"||e.key=="ArrowLeft") && count>0) {
         if(countCorrect==count) {
             countCorrect--;
         }
@@ -17,6 +17,11 @@ document.addEventListener("keydown",(e)=>{
     else if(e.key=="r") {
         count = 0;
         container.innerHTML = "";
+    }
+    else if(e.key=="ArrowRight") {
+        container.innerHTML += `<div class='character correct'>${pi[count]}</div>`;
+        count++;
+        countCorrect++;
     }
     else if(e.key==pi[count]) {
         container.innerHTML += `<div class='character correct'>${pi[count]}</div>`;
