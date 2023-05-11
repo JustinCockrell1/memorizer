@@ -43,6 +43,8 @@ const showScoreBtn = document.getElementById("show-score");
 //SCORE
 let totalScore = 0;
 const scoreDisplay = document.getElementById("score-display");
+const playAgainBtn = document.getElementById("play-again");
+const menuBtn = document.getElementById("menu")
 
 
 window.onload = function() {
@@ -72,14 +74,25 @@ showScoreBtn.onclick = function(e) {
     showScore();
 }
 
+playAgainBtn.onclick = startMemorize;
+
+menuBtn.onclick = function(e) {
+    settingsSection.style.display="block";
+    memorizeSection.style.display="none";
+    recallSection.style.display="none";
+}
+
 function startMemorize() {
     settingsSection.style.display="none";
     memorizeSection.style.display="block";
+    recallSection.style.display="none";
     console.log(digits.value);
     randomNumber = parseInt(Math.random()*(Math.pow(10,digitsInput.value)),10).toString();
 
     setLocation = 0;
     setSize = parseInt(setSizeInput.value);
+
+    memorizeDisplay.innerHTML = "";
 
     for(let i = 0; i < randomNumber.length; i++) {
     memorizeDisplay.innerHTML += `<span class='digit-display memorize-digit-display'>${randomNumber.charAt(i)}</span>`;
@@ -95,12 +108,24 @@ function startRecall() {
     memorizeSection.style.display="none";
     recallSection.style.display="block";
 
+    recallDisplay.innerHTML = "";
+
     for(let i = 0; i < randomNumber.length; i++) {
         recallDisplay.innerHTML += `<span class='digit-display recall-digit-display'> </span>`;
     }
 
+    guessedNumber = "";
+    recallLocation = 0;
+    menuBtn.style.display = "none";
+    playAgainBtn.style.display = "none";
 
     recalledDigits = document.querySelectorAll(".recall-digit-display");
+
+    scoreDisplay.style.display="none";
+
+    showScoreBtn.style.display = "block";
+    menuBtn.style.display = "none";
+    playAgainBtn.style.display = "none";
 }
 
 
@@ -119,6 +144,8 @@ function showScore() {
     scoreDisplay.style.display="block";
 
     showScoreBtn.style.display = "none";
+    menuBtn.style.display = "inline";
+    playAgainBtn.style.display = "inline";
 
     
 }
