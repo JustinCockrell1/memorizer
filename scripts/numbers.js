@@ -22,6 +22,11 @@ const setDisplay = document.getElementById("set-display");
 const setRight = document.getElementById("set-right");
 const setLeft = document.getElementById("set-left");
 
+const timerDisplays = document.querySelectorAll(".timer");
+let timer = 60;
+let startTime = 0;
+let timerInterval;
+
 let randomNumber = parseInt(Math.random()*10, 10).toString();
 
 let setLocation = 0;
@@ -82,6 +87,21 @@ menuBtn.onclick = function(e) {
     recallSection.style.display="none";
 }
 
+function countdownTimer() {
+    const currentTime = Date.now();
+    timerDisplays[0].innerHTML = Math.floor((timer - (currentTime/1000 - startTime/1000))*10)/10; 
+    if(currentTime>startTime + timer*1000) {
+        clearInterval(timerInterval);
+         startRecall();     
+          
+    }
+}
+
+function startTimer() {
+    startTime = Date.now();
+    timerInterval = window.setInterval(countdownTimer, 200);
+}
+
 function startMemorize() {
     settingsSection.style.display="none";
     memorizeSection.style.display="block";
@@ -91,6 +111,10 @@ function startMemorize() {
 
     setLocation = 0;
     setSize = parseInt(setSizeInput.value);
+
+    timer = memorizeTimeInput.value;
+
+    startTimer();
 
     memorizeDisplay.innerHTML = "";
 
